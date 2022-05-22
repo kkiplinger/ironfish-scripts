@@ -1,47 +1,48 @@
 # ironfish-scripts
 
-Запуск скрипта производится через интерпретатор bash
+English translation from original Russian readme
 
-Можно скопировать всю репу:
+ironfish-scripts
 
-git clone https://github.com/wk27/ironfish-scripts.git
+The script is run under the bash interpreter.
 
---------
+You can copy the entire root:
 
-Скрипт экспортирует и выводит переменные окружения.
+git clone https://github.com/kkiplinger/ironfish-scripts.git
 
-Иногда люди меняют название кошелька/граффити, но не меняют его в конфигах.
 
-Далее следует запрос баланса.
+Script Function:
 
-Если он больше, чем минимальная транзакция + комиссия, то:
+1. The script exports and outputs environment variables.
 
-Делим баланс на это число, получаем количество возможных транзакций без повторного запроса баланса.
-Каждое 10 повторение происходит запрос баланса в фоне, но он влияет только на отображение в рантайме, чтобы не делать это в соседней консоли, на количество изначальных повторений он не влияет.
-Скрипт доделывает свою работу и повторяет процедуру ещё раз.
+2. Handle changed name of the wallet/graffiti but not changed it in the configs.
 
-Исключения:
-1. Если мы видим ошибку "Недостаточно средств", но при этом глобальная итерация не завершилась, то сбрасывается цикл, скрипт ждет 5 минут и начинает цикл заново.
-2. 5 таких ошибок и скрипт сделает рескан базы (занимает несколько часов).
-Этот функционал доступен при запуске с опцией rescan-allowed
-3. Если скрипт видит ошибку подключения к ноде, значит останавливаемся на полчаса и ждем, когда это пройдет.
+3. Request the wallet balance.
 
---------
+4. If it is more than the minimum transaction + commission, then:
 
-Стандартный запуск:
+	Divide the balance by this number, get the number of possible transactions without re-requesting 
+	the balance. Every 10 repetitions, a balance request occurs in the background, but it only affects 
+	the display in runtime, so as not to do this in the adjacent console, it does not affect the number 
+	of initial repetitions. The script completes its work and repeats the procedure one more time.
+
+Exceptions:
+
+If we see the "Insufficient funds" error, but the global iteration has not completed, then the loop is 
+reset, the script waits 5 minutes and starts the loop again. Five such errors and the script will rescan 
+the database (takes several hours). This functionality is available at startup with the rescan-allowed 
+option. If the script sees an error connecting to the node, then we stop for half an hour and wait for 
+it to pass.
+
+
+To run a standard launch use:
 
 bash ${HOME}/ironfish-scripts/deposit.sh
 
-Запуск с разрешенной опцией ресканить базу (для автоматического ironfish accounts:rescan, рекомендуется если вы опытный пользователь):
+To run with the rescan database option enabled. Use this for automatic ironfish accounts:rescan. Recommended if you are an advanced user:
 
 bash ${HOME}/ironfish-scripts/deposit.sh rescan-allowed
 
---------
+To Update the script use:
 
-Обновление:
-
- /usr/bin/git -C ${HOME}/ironfish-scripts pull
-
---------
-
-Задонатить: 304873a0169554709fdf87c50d738042e684eb42aa944098cf195486ba76879b70e36fd96e4554ba52b91c
+/usr/bin/git -C ${HOME}/ironfish-scripts pull
